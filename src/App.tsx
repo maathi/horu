@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react"
 import "./App.css"
+import List from "./components/list"
+import Map from "./components/map"
+import VisitInterface from "./schema/visitInterface"
 
 function App() {
-  let [visits, setVisits] = useState<any>()
+  let [visits, setVisits] = useState<VisitInterface[]>([])
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API}`)
@@ -12,12 +15,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>hello again</h1>
-      <ul>
-        {visits?.map((v: any) => (
-          <li key={v.id}>{v.city}</li>
-        ))}
-      </ul>
+      <Map visits={visits}></Map>
+      <List visits={visits}></List>
     </div>
   )
 }
