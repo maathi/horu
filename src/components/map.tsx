@@ -5,13 +5,25 @@ const Marker = ({
   text,
   lat,
   lng,
+  selected,
 }: {
   text: String
   lat: Number
   lng: Number
-}) => <div style={{ color: "red", fontSize: "24px" }}>{text}</div>
+  selected: Boolean
+}) => (
+  <div style={{ color: selected ? "red" : "yellow", fontSize: "24px" }}>
+    {text}
+  </div>
+)
 
-function Map({ visits }: { visits: VisitInterface[] }) {
+function Map({
+  visits,
+  selectedVisit,
+}: {
+  visits: VisitInterface[]
+  selectedVisit: VisitInterface | undefined
+}) {
   return (
     <div
       style={{
@@ -23,13 +35,26 @@ function Map({ visits }: { visits: VisitInterface[] }) {
     >
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_KEY || "" }}
-        defaultCenter={{ lat: -34.397, lng: 150.644 }}
+        defaultCenter={{
+          lat: -34.397,
+          lng: 150.644,
+        }}
+        center={
+          selectedVisit
+            ? {
+                lat: Number(selectedVisit?.loc?.split(",")[0]),
+                lng: Number(selectedVisit?.loc?.split(",")[1]),
+              }
+            : undefined
+        }
         defaultZoom={2}
       >
         {visits?.map((v) => (
           <Marker
+            key={v.id}
             lat={Number(v.loc.split(",")[0])}
             lng={Number(v.loc.split(",")[1])}
+            selected={v.id === selectedVisit?.id ? true : false}
             text="+"
           />
         ))}

@@ -6,6 +6,7 @@ import VisitInterface from "./schema/visitInterface"
 
 function App() {
   let [visits, setVisits] = useState<VisitInterface[]>([])
+  let [selectedVisit, setSelectedVisit] = useState<VisitInterface | undefined>()
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API}`)
@@ -15,8 +16,12 @@ function App() {
 
   return (
     <div className="App">
-      <Map visits={visits}></Map>
-      <List visits={visits}></List>
+      <Map visits={visits} selectedVisit={selectedVisit}></Map>
+      <List
+        visits={visits}
+        setVisits={setVisits}
+        setSelectedVisit={setSelectedVisit}
+      ></List>
     </div>
   )
 }
