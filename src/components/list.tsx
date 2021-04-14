@@ -7,42 +7,24 @@ import TableContainer from "@material-ui/core/TableContainer"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 import Paper from "@material-ui/core/Paper"
-import { FcFilledFilter, FcClearFilters } from "react-icons/fc"
+import { FcClearFilters } from "react-icons/fc"
 import { useState } from "react"
-import flags from "../flags"
+import Visit from "./visit"
+import { filterByType, filterType } from "../schema/filters"
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
-  row: {
-    "&:hover": {
-      "& $filter": {
-        visibility: "visible",
-      },
-    },
-  },
-  filter: {
-    visibility: "hidden",
-  },
 })
 
-type filterableType = "ip" | "city"
-
-type filterType = {
-  att: filterableType
-  value: string
-}
-
-function List({
-  visits,
-  setVisits,
-  setSelectedVisit,
-}: {
+type props = {
   visits: VisitInterface[]
   setVisits: Function
   setSelectedVisit: Function
-}) {
+}
+
+function List({ visits, setVisits, setSelectedVisit }: props) {
   let classes = useStyles()
   let [filters, setFilters] = useState<filterType[]>([])
 
@@ -56,7 +38,7 @@ function List({
     setVisits(res)
   }
 
-  async function unfilter(filterable: filterableType | undefined) {
+  async function unfilter(filterable: filterByType | undefined) {
     if (!filterable) return
 
     let res = await fetch(`${process.env.REACT_APP_API}`)
@@ -81,27 +63,19 @@ function List({
               <TableCell>id</TableCell>
               <TableCell align="right">
                 ip
-                {filters.find((f) => f.att === "ip") ? (
-                  <FcClearFilters
-                    onClick={() =>
-                      unfilter(filters.find((f) => f.att === "ip")?.att)
-                    }
-                  />
-                ) : (
-                  ""
-                )}
+                <UnfilterIcon
+                  filters={filters}
+                  filterBy={"ip"}
+                  unfilter={unfilter}
+                />
               </TableCell>
               <TableCell align="right">
                 City
-                {filters.find((f) => f.att === "city") ? (
-                  <FcClearFilters
-                    onClick={() =>
-                      unfilter(filters.find((f) => f.att === "city")?.att)
-                    }
-                  />
-                ) : (
-                  ""
-                )}
+                <UnfilterIcon
+                  filters={filters}
+                  filterBy={"city"}
+                  unfilter={unfilter}
+                />
               </TableCell>
               <TableCell align="right">os</TableCell>
               <TableCell align="right">browser</TableCell>
@@ -110,45 +84,32 @@ function List({
           </TableHead>
           <TableBody>
             {visits?.map((v) => (
-              <TableRow
-                className={classes.row}
+              <Visit
                 key={v.id}
-                onClick={() => {
-                  setSelectedVisit(v)
-                }}
-              >
-                <TableCell component="th" scope="row">
-                  {v.id}
-                </TableCell>
-                <TableCell align="right">
-                  {v.ip}
-                  <FcFilledFilter
-                    className={classes.filter}
-                    onClick={() => {
-                      filter({ att: "ip", value: v.ip })
-                    }}
-                  />
-                </TableCell>
-                <TableCell align="right">
-                  {v.city}
-                  {flags[v.country]?.emoji}
-                  <FcFilledFilter
-                    className={classes.filter}
-                    onClick={() => {
-                      filter({ att: "city", value: v.city })
-                    }}
-                  />
-                </TableCell>
-                <TableCell align="right">{v.os}</TableCell>
-                <TableCell align="right">{v.browser}</TableCell>
-                <TableCell align="right">{v.time}</TableCell>
-              </TableRow>
+                visit={v}
+                filter={filter}
+                setSelectedVisit={setSelectedVisit}
+              />
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     </h1>
   )
+}
+
+function UnfilterIcon({
+  filters,
+  filterBy,
+  unfilter,
+}: {
+  filters: filterType[]
+  filterBy: filterByType
+  unfilter: Function
+}) {
+  let filter: filterType | undefined = filters.find((f) => f.att === filterBy)
+  if (!filter) return null
+  return <FcClearFilters onClick={() => unfilter(filterBy)} />
 }
 
 export default List
