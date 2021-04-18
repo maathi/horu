@@ -1,4 +1,4 @@
-type filterByType = "ip" | "city"
+type filterByType = "ip" | "city" | "name"
 
 type filterType = {
   att: filterByType

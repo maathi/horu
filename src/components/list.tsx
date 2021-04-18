@@ -13,8 +13,14 @@ import Visit from "./visit"
 import { filterByType, filterType } from "../schema/filters"
 
 const useStyles = makeStyles({
+  tableContainer: {
+    width: "80vw",
+    margin: "auto",
+    borderRadius: "15px",
+    boxShadow: "3px 3px 12px 3px #c2c2c2",
+  },
   table: {
-    minWidth: 650,
+    width: "100%",
   },
 })
 
@@ -32,7 +38,7 @@ function List({ visits, setVisits, setSelectedVisit }: props) {
     if (filters.find((f) => f.att === filter.att)) return
 
     let { att, value } = filter
-    let res = visits.filter((v) => v[att] === value)
+    let res = visits.filter((v) => v.device[att] === value)
     filters.push({ att, value })
     setFilters(filters)
     setVisits(res)
@@ -47,7 +53,7 @@ function List({ visits, setVisits, setSelectedVisit }: props) {
     let newFilters = filters.filter((f) => f.att !== filterable)
 
     newFilters.forEach(({ att, value }) => {
-      newVisits = newVisits.filter((v) => v[att] === value)
+      newVisits = newVisits.filter((v) => v.device[att] === value)
     })
 
     setVisits(newVisits)
@@ -56,20 +62,19 @@ function List({ visits, setVisits, setSelectedVisit }: props) {
 
   return (
     <h1>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className={classes.tableContainer}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>id</TableCell>
-              <TableCell align="right">
-                ip
+              <TableCell align="left">
+                Device
                 <UnfilterIcon
                   filters={filters}
-                  filterBy={"ip"}
+                  filterBy={"name"}
                   unfilter={unfilter}
                 />
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="left">
                 City
                 <UnfilterIcon
                   filters={filters}
@@ -77,9 +82,9 @@ function List({ visits, setVisits, setSelectedVisit }: props) {
                   unfilter={unfilter}
                 />
               </TableCell>
-              <TableCell align="right">os</TableCell>
-              <TableCell align="right">browser</TableCell>
-              <TableCell align="right">time</TableCell>
+              <TableCell align="left">os</TableCell>
+              <TableCell align="left">browser</TableCell>
+              <TableCell align="left">time</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

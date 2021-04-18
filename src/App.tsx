@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <Map visits={visits} selectedVisit={selectedVisit}></Map>
+      {/* <Map visits={visits} selectedVisit={selectedVisit}></Map> */}
       <List
         visits={visits}
         setVisits={setVisits}

@@ -1,17 +1,12 @@
 import React from "react"
-import flags from "../flags"
+import DeviceInterface from "./deviceInterface"
 
 interface VisitInterface {
   id: React.Key
   referer: string
-  agent: string
-  os: string
-  browser: string
-  ip: string
-  country: keyof typeof flags
-  city: string
-  loc: string
   time: Date
+  events: [{ title: string; time: number }]
+  device: DeviceInterface
 }
 
 export default VisitInterface

@@ -5,6 +5,7 @@ import TableRow from "@material-ui/core/TableRow"
 import { FcFilledFilter } from "react-icons/fc"
 import flags from "../flags"
 import { filterType } from "../schema/filters"
+import moment from "moment"
 
 const useStyles = makeStyles({
   row: {
@@ -26,6 +27,8 @@ type props = {
 }
 
 export default function Visit({ visit, filter, setSelectedVisit }: props) {
+  let m = moment(visit.time, "YYYY-MM-DDTHH:mm:ss.SSS").fromNow()
+  console.log(m)
   let classes = useStyles()
 
   return (
@@ -37,22 +40,25 @@ export default function Visit({ visit, filter, setSelectedVisit }: props) {
       }}
     >
       <TableCell component="th" scope="row">
-        {visit.id}
+        {visit.device.name}
       </TableCell>
-      <TableCell align="right">
-        {visit.ip}
-        <FilterIcon f={{ att: "ip", value: visit.ip }} filter={filter} />
+      <TableCell align="left">
+        {flags[visit.device.country]?.emoji} &nbsp;
+        {visit.device.city}
+        <FilterIcon
+          f={{ att: "city", value: visit.device.city }}
+          filter={filter}
+        />
       </TableCell>
-      <TableCell align="right">
-        {visit.city}
-        {flags[visit.country]?.emoji}
-        <FilterIcon f={{ att: "city", value: visit.city }} filter={filter} />
-      </TableCell>
-      <TableCell align="right">{visit.os}</TableCell>
-      <TableCell align="right">{visit.browser}</TableCell>
-      <TableCell align="right">{visit.time}</TableCell>
+      <TableCell align="left">{visit.device.os}</TableCell>
+      <TableCell align="left">{visit.device.browser}</TableCell>
+      <TableCell align="left">{when(visit.time)}</TableCell>
     </TableRow>
   )
+}
+
+function when(time: Date) {
+  return moment(time, "YYYY-MM-DDTHH:mm:ss.SSSZ").fromNow()
 }
 
 function FilterIcon({ f, filter }: { f: filterType; filter: Function }) {

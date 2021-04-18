@@ -42,8 +42,8 @@ function Map({
         center={
           selectedVisit
             ? {
-                lat: Number(selectedVisit?.loc?.split(",")[0]),
-                lng: Number(selectedVisit?.loc?.split(",")[1]),
+                lat: Number(selectedVisit?.device.location?.split(",")[0]),
+                lng: Number(selectedVisit?.device.location?.split(",")[1]),
               }
             : undefined
         }
@@ -52,8 +52,8 @@ function Map({
         {visits?.map((v) => (
           <Marker
             key={v.id}
-            lat={Number(v.loc.split(",")[0])}
-            lng={Number(v.loc.split(",")[1])}
+            lat={Number(v.device.location.split(",")[0])}
+            lng={Number(v.device.location.split(",")[1])}
             selected={v.id === selectedVisit?.id ? true : false}
             text="+"
           />
