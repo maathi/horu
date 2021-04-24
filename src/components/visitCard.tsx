@@ -48,7 +48,13 @@ export default function DeviceCard({ visit }: { visit: VisitInterface }) {
               <TableRow key={e.time}>
                 <TableCell align="center">{e.title}</TableCell>
                 <TableCell align="center">
-                  {moment().startOf("day").seconds(e.time).format("mm:ss")}
+                  {moment()
+                    .startOf("day")
+                    .milliseconds(
+                      e.time -
+                        moment(visit.time, "YYYY-MM-DDTHH:mm:ss.SSSZ").valueOf()
+                    )
+                    .format("mm:ss")}
                 </TableCell>
               </TableRow>
             ))}
