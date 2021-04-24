@@ -1,4 +1,5 @@
 import flags from "../flags"
+import VisitInterface from "./visitInterface"
 
 interface DeviceInterface {
   id: string
@@ -7,9 +8,9 @@ interface DeviceInterface {
   country: keyof typeof flags
   city: string
   location: string
-  agent: string
   os: string
   browser: string
+  visits?: VisitInterface[]
 }
 
 export default DeviceInterface

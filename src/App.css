@@ -1,4 +1,17 @@
 body {
-  background-color: hsl(0, 0%, 90%);
-  color: grey;
+  background-color: hsl(229, 24%, 91%);
+  color: hsl(0, 0%, 33%);
+  margin-top: 1rem;
+}
+
+:root {
+  --blue: #40154d;
+  --white: #ffffff;
+  --shadow: 1px 1px 4px 0.5px #c2c2c2;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }

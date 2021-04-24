@@ -6,12 +6,14 @@ import { FcFilledFilter } from "react-icons/fc"
 import flags from "../flags"
 import { filterType } from "../schema/filters"
 import moment from "moment"
+import { RouteComponentProps, withRouter } from "react-router-dom"
 
 const useStyles = makeStyles({
   row: {
+    cursor: "pointer",
     "&:hover": {
       "& $filter": {
-        visibility: "visible",
+        // visibility: "visible",
       },
     },
   },
@@ -20,24 +22,19 @@ const useStyles = makeStyles({
   },
 })
 
-type props = {
+interface Props {
   visit: VisitInterface
   filter: Function
-  setSelectedVisit: Function
 }
 
-export default function Visit({ visit, filter, setSelectedVisit }: props) {
-  let m = moment(visit.time, "YYYY-MM-DDTHH:mm:ss.SSS").fromNow()
-  console.log(m)
+const Visit = ({ visit, filter, history }: Props & RouteComponentProps) => {
   let classes = useStyles()
 
   return (
     <TableRow
       className={classes.row}
       key={visit.id}
-      onClick={() => {
-        setSelectedVisit(visit)
-      }}
+      onClick={() => history.push(visit.device.name)}
     >
       <TableCell component="th" scope="row">
         {visit.device.name}
@@ -73,3 +70,5 @@ function FilterIcon({ f, filter }: { f: filterType; filter: Function }) {
     />
   )
 }
+
+export default withRouter(Visit)

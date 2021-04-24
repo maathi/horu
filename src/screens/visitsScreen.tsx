@@ -8,8 +8,9 @@ import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 import Paper from "@material-ui/core/Paper"
 import { FcClearFilters } from "react-icons/fc"
-import { useState } from "react"
-import Visit from "./visit"
+import { useState, useEffect } from "react"
+import Visit from "../components/visitRow"
+
 import { filterByType, filterType } from "../schema/filters"
 
 const useStyles = makeStyles({
@@ -17,21 +18,22 @@ const useStyles = makeStyles({
     width: "80vw",
     margin: "auto",
     borderRadius: "15px",
-    boxShadow: "3px 3px 12px 3px #c2c2c2",
+    boxShadow: "var(--shadow)",
   },
   table: {
-    width: "100%",
+    // width: "100%",
   },
 })
 
-type props = {
-  visits: VisitInterface[]
-  setVisits: Function
-  setSelectedVisit: Function
-}
-
-function List({ visits, setVisits, setSelectedVisit }: props) {
+function VisitScreen() {
   let classes = useStyles()
+  let [visits, setVisits] = useState<VisitInterface[]>([])
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API}`)
+      .then((response) => response.json())
+      .then((v) => setVisits(v))
+  }, [])
   let [filters, setFilters] = useState<filterType[]>([])
 
   function filter(filter: filterType) {
@@ -61,7 +63,8 @@ function List({ visits, setVisits, setSelectedVisit }: props) {
   }
 
   return (
-    <h1>
+    <div>
+      <h1>Latests visits :</h1>
       <TableContainer component={Paper} className={classes.tableContainer}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -89,17 +92,12 @@ function List({ visits, setVisits, setSelectedVisit }: props) {
           </TableHead>
           <TableBody>
             {visits?.map((v) => (
-              <Visit
-                key={v.id}
-                visit={v}
-                filter={filter}
-                setSelectedVisit={setSelectedVisit}
-              />
+              <Visit key={v.id} visit={v} filter={filter} />
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </h1>
+    </div>
   )
 }
 
@@ -117,4 +115,4 @@ function UnfilterIcon({
   return <FcClearFilters onClick={() => unfilter(filterBy)} />
 }
 
-export default List
+export default VisitScreen
