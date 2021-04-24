@@ -12,7 +12,7 @@ const DeviceScreen = ({ match }: any) => {
     fetch(`${process.env.REACT_APP_API}/${match.params.name}`)
       .then((response) => response.json())
       .then((r) => setDevice(r))
-  }, [])
+  }, [match.params.name])
 
   if (!device) return <h1>no such device</h1>
   if (!device.visits) return <h1>no such device</h1>
