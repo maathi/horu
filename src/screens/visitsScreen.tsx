@@ -12,10 +12,12 @@ import { useState, useEffect } from "react"
 import Visit from "../components/visitRow"
 
 import { filterByType, filterType } from "../schema/filters"
+import { Box, Checkbox, Typography } from "@material-ui/core"
+// import { Visibility } from "@material-ui/icons"
 
 const useStyles = makeStyles({
   tableContainer: {
-    width: "80vw",
+    width: "100%",
     margin: "auto",
     borderRadius: "15px",
     boxShadow: "var(--shadow)",
@@ -63,12 +65,20 @@ function VisitScreen() {
   }
 
   return (
-    <div>
-      <h1>Latests visits :</h1>
+    <>
+      <Box display="flex" alignItems="center" gridGap="1rem" margin={3}>
+        {/* <Visibility fontSize="large" /> */}
+
+        <span style={{ fontSize: "45px" }}>🕵</span>
+        <Typography variant="h4">Latest Visits</Typography>
+      </Box>
       <TableContainer component={Paper} className={classes.tableContainer}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell padding="checkbox">
+                <Checkbox checked={true} />
+              </TableCell>
               <TableCell align="left">
                 Device
                 <UnfilterIcon
@@ -97,7 +107,7 @@ function VisitScreen() {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </>
   )
 }
 

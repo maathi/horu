@@ -1,32 +1,31 @@
 import { Link } from "react-router-dom"
 import { makeStyles } from "@material-ui/core/styles"
-import { BiDevices } from "react-icons/bi"
-import { BsEyeFill } from "react-icons/bs"
-import { AiFillDashboard } from "react-icons/ai"
-import { FaMapMarkerAlt } from "react-icons/fa"
 import { Box } from "@material-ui/core"
+import { Place, DevicesOther, Dashboard, Visibility } from "@material-ui/icons"
+
 const useStyles = makeStyles({
   panel: {
+    position: "sticky",
+    top: "1rem",
+    paddingRight: "3rem",
     display: "flex",
     flexDirection: "column",
-    gap: "2rem",
-    margin: "7rem auto",
+    gap: "1.5rem",
     "& a": {
       color: "grey",
       textDecoration: "none",
     },
   },
   box: {
-    backgroundColor: "#ededed",
-    width: "100%",
-    padding: "0.5rem 1rem",
+    padding: "0.5rem 0",
+    paddingLeft: "1rem",
     borderTopRightRadius: "30px",
     borderBottomRightRadius: "30px",
     transition: "0.3s",
     display: "flex",
     gap: "0.5rem",
     "&:hover": {
-      background: "green",
+      background: "#21eb32",
       transition: "0.3s",
       "& a": {
         color: "white",
@@ -39,22 +38,28 @@ const Sidepanel = () => {
   const classes = useStyles()
   return (
     <ul className={classes.panel}>
+      <img
+        style={{ width: "65%", margin: "2rem auto" }}
+        src="horupan.png"
+        alt=""
+      />
       <Box
         display="flex"
         alignItems="center"
         gridGap="0.5rem"
         className={classes.box}
       >
-        <AiFillDashboard />
+        <Dashboard />
         <Link to="/dashboard">Dashboard</Link>
       </Box>
+
       <Box
         display="flex"
         alignItems="center"
         gridGap="0.5rem"
         className={classes.box}
       >
-        <BsEyeFill />
+        <Visibility />
         <Link to="/visits">Visits</Link>
       </Box>
       <Box
@@ -63,7 +68,7 @@ const Sidepanel = () => {
         gridGap="0.5rem"
         className={classes.box}
       >
-        <BiDevices />
+        <DevicesOther />
         <Link to="/devices">Devices</Link>
       </Box>
       <Box
@@ -72,7 +77,7 @@ const Sidepanel = () => {
         gridGap="0.5rem"
         className={classes.box}
       >
-        <FaMapMarkerAlt />
+        <Place />
         <Link to="/map">Map</Link>
       </Box>
     </ul>

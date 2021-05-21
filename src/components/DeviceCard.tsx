@@ -10,7 +10,8 @@ import flags from "../flags"
 
 const useStyles = makeStyles({
   tableContainer: {
-    marginTop: "6rem",
+    position: "sticky",
+    top: "6rem",
     borderRadius: "10px",
     boxShadow: "var(--shadow)",
   },

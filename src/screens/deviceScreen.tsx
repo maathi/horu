@@ -18,8 +18,8 @@ const DeviceScreen = ({ match }: any) => {
   if (!device.visits) return <h1>no such device</h1>
 
   return (
-    <>
-      <Grid item md={8} xs={12}>
+    <Grid container spacing={2}>
+      <Grid item md={7} xs={12}>
         <h1>
           {flags[device.country]?.emoji} &nbsp;{device?.name}
         </h1>
@@ -30,10 +30,10 @@ const DeviceScreen = ({ match }: any) => {
           <VisitCard key={v.id} visit={v}></VisitCard>
         ))}
       </Grid>
-      <Grid item md={4} xs={12}>
+      <Grid item md={5} xs={12}>
         <DeviceCard device={device}></DeviceCard>
       </Grid>
-    </>
+    </Grid>
   )
 }
 

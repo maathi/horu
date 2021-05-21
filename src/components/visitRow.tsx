@@ -7,6 +7,7 @@ import flags from "../flags"
 import { filterType } from "../schema/filters"
 import moment from "moment"
 import { RouteComponentProps, withRouter } from "react-router-dom"
+import { Checkbox } from "@material-ui/core"
 
 const useStyles = makeStyles({
   row: {
@@ -36,6 +37,9 @@ const Visit = ({ visit, filter, history }: Props & RouteComponentProps) => {
       key={visit.id}
       onClick={() => history.push(visit.device.name)}
     >
+      <TableCell padding="checkbox">
+        <Checkbox checked={true} />
+      </TableCell>
       <TableCell component="th" scope="row">
         {visit.device.name}
       </TableCell>

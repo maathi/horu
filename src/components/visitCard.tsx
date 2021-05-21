@@ -6,18 +6,24 @@ import TableRow from "@material-ui/core/TableRow"
 import Paper from "@material-ui/core/Paper"
 import { makeStyles } from "@material-ui/core/styles"
 import VisitInterface from "../schema/visitInterface"
-import { FaRegClock } from "react-icons/fa"
+import {
+  WatchLaterRounded,
+  OpenInBrowserRounded,
+  Mouse,
+} from "@material-ui/icons"
 import moment from "moment"
+import { Box } from "@material-ui/core"
 const useStyles = makeStyles({
   visitCard: {
-    background: "white",
-    boxShadow: "var(--shadow)",
+    // width: "100%",
+    // background: "white",
+    // boxShadow: "var(--shadow)",
     borderRadius: "10px",
     padding: "1rem",
-    margin: "1rem",
+    margin: "1rem auto",
   },
   tableContainer: {
-    // width: "300px",
+    width: "100%",
     margin: "auto",
     boxShadow: "none",
     borderRadius: "10px",
@@ -25,7 +31,7 @@ const useStyles = makeStyles({
     // boxShadow: "3px 3px 12px 3px #c2c2c2",
   },
   table: {
-    width: "80%",
+    // width: "80%",
     margin: "auto",
   },
 })
@@ -34,13 +40,26 @@ export default function DeviceCard({ visit }: { visit: VisitInterface }) {
   let classes = useStyles()
 
   return (
-    <div className={classes.visitCard}>
-      <b>
-        <FaRegClock /> &amp; {when(visit.time)}
-      </b>
-      <p> {visit.referer || "no referer"}</p>
+    <Paper elevation={1} className={classes.visitCard}>
+      <Box display="flex" alignItems="center" gridGap="0.5rem">
+        <WatchLaterRounded color={"primary"} />
+        <b>{when(visit.time)}</b>
+      </Box>
+      <p>
+        {visit.referer ? (
+          <Box display="flex" alignItems="center" gridGap="0.5rem">
+            <OpenInBrowserRounded color={"primary"} />
+            {visit.referer}
+          </Box>
+        ) : (
+          ""
+        )}
+      </p>
 
-      <span>events :</span>
+      <Box display="flex" alignItems="center" gridGap="0.5rem">
+        <Mouse color={"primary"} />
+        events :
+      </Box>
       <TableContainer component={Paper} className={classes.tableContainer}>
         <Table className={classes.table} aria-label="simple table">
           <TableBody>
@@ -61,7 +80,7 @@ export default function DeviceCard({ visit }: { visit: VisitInterface }) {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </Paper>
   )
 }
 
