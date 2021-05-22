@@ -6,13 +6,17 @@
 
 ![Homepage screenshot](https://mathiland.vercel.app/img/horu-screenshot.png)
 
-Features include tracking visitor's:
+Features include tracking :
 
 - IP
 - Location (Ip based)
 - browser
 - OS
 - Events
+
+## Backend code
+
+Backend code can be found at [horu-api](https://github.com/maathi/horu-api)
 
 ## Tools
 
